@@ -13,7 +13,9 @@ eye_cascade = cv2.CascadeClassifier(
 def main():
     cap = cv2.VideoCapture(0)
     closed_eyes_frames = 0
-    FATIGUE_THRESHOLD = 30  # more accurate, fewer false alarms
+    FATIGUE_THRESHOLD = 30 # more accurate, fewer false alarms
+    alarm_on = False
+
 
 
     while True:
@@ -47,7 +49,13 @@ def main():
                     (0, 0, 255),
                     3
                 )
-                winsound.Beep(1000, 500)
+
+                if not alarm_on:
+                    winsound.Beep(1000, 700)
+                    alarm_on = True
+            else:
+                alarm_on = False
+
                     
 
         cv2.imshow("AI Fatigue Detection", frame)
@@ -60,3 +68,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
