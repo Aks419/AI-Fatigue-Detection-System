@@ -1,0 +1,8 @@
+import cv2
+
+def main():
+    print("AI-Based Fatigue Detection System")
+    print("Project initialized successfully.")
+
+if __name__ == "__main__":
+    main()
