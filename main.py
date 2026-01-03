@@ -1,4 +1,6 @@
 import cv2
+import winsound
+
 
 # Load Haar cascades
 face_cascade = cv2.CascadeClassifier(
@@ -11,7 +13,8 @@ eye_cascade = cv2.CascadeClassifier(
 def main():
     cap = cv2.VideoCapture(0)
     closed_eyes_frames = 0
-    FATIGUE_THRESHOLD = 20
+    FATIGUE_THRESHOLD = 30  # more accurate, fewer false alarms
+
 
     while True:
         ret, frame = cap.read()
@@ -31,7 +34,8 @@ def main():
             if len(eyes) == 0:
                 closed_eyes_frames += 1
             else:
-                closed_eyes_frames = 0
+                closed_eyes_frames = max(0, closed_eyes_frames - 1)
+
 
             if closed_eyes_frames > FATIGUE_THRESHOLD:
                 cv2.putText(
@@ -43,6 +47,8 @@ def main():
                     (0, 0, 255),
                     3
                 )
+                winsound.Beep(1000, 500)
+                    
 
         cv2.imshow("AI Fatigue Detection", frame)
 
@@ -54,3 +60,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
